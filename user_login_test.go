@@ -19,8 +19,8 @@ var _ = Describe("UserLogin", func() {
 	})
 
 	var loginPage = map[string]string{
-		"email":    "loginEmailAddress",
-		"password": "exampleInputPassword1",
+		"email":    "#email",
+		"password": "#password",
 		"submit":   "Submit",
 	}
 
@@ -28,38 +28,35 @@ var _ = Describe("UserLogin", func() {
 		Expect(page.Destroy()).To(Succeed())
 	})
 	// Test Feature
-	Describe("User Login Authentication", func() {
-		// Acceptence Criterias
-		It("should allow the user to dashboard with correct username and password and display username", func() {
 
-			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com"))
-			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find(".greeting")).Should(HaveText("user 1"))
-
-		})
-
-		It("should not allowing the user to dashboard with correct username and wrong password", func() {
-
-			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com"))
-			Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
-		})
-
-		It("should not allowing the user to dashboard with wrong username and correct password", func() {
-
-			Expect(page.Find(loginPage["email"]).Fill("notauser@mail.com"))
-			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
-		})
-
-		It("should not allowing the user to dashboard with null username and password", func() {
-
-			Expect(page.Find(loginPage["email"]).Fill(" "))
-			Expect(page.Find(loginPage["password"]).Fill(" ")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
+	It("should direct to login page", func() {
+		By("redirecting the user to the login form from the home page", func() {
+			Expect(page.Navigate("http://marketwatcher.tech")).To(Succeed())
+			Eventually(page).Should(HaveURL("http://marketwatcher.tech/landing?redirect=%2Fdashboard"))
 		})
 
 	})
 
+	It("should manage user Authentication", func() {
+		By("loging in user with correct username and password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+
+		})
+
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with correct username and password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+
+		})
+
+	})
 })
