@@ -44,7 +44,7 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
 			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
 			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
-			//Eventually(page.Find("div.nav.navbar-nav.navbar-right")).Should(HaveText("userone@mail.com"))
+			//Eventually(page.Find("#user-email.b)).Should(HaveText("userone@mail.com"))
 
 		})
 
@@ -55,7 +55,7 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
 			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
 			Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
 			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
 
 		})
@@ -67,7 +67,7 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
 			Expect(page.Find(loginPage["email"]).Fill("userone@mail.com")).To(Succeed())
 			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
 			//Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
 			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
 		})
@@ -79,8 +79,68 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Find(loginPage["email"]).Fill("userone@mail.com")).To(Succeed())
 			Expect(page.Find(loginPage["password"]).Fill("passone")).To(Succeed())
 			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
 			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with empty username and password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passone")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Eventually(page.Find("div.has-error")).Should(HaveText("E-mail address cannot be null"))
+
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with invalid username and password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("abc")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passone")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Please insert a valid e-mail address"))
+
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with any valid username and empty password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Password cannot be null"))
+
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with any valid username and multiple space password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("   ")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Password must be alphanumeric and at least 6 characters"))
+
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with any valid username and multiple space password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("    ")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Password must be alphanumeric and at least 6 characters"))
 
 		})
 	})
