@@ -43,13 +43,15 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
 			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
 			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
+			//Eventually(page.Find("div.nav.navbar-nav.navbar-right")).Should(HaveText("userone@mail.com"))
 
 		})
 
 	})
 
 	It("should manage user Authentication", func() {
-		By("loging in user with correct username and password", func() {
+		By("loging in user with correct username and wrong password", func() {
 			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
 			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
 			Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
@@ -59,4 +61,28 @@ var _ = Describe("UserLogin", func() {
 		})
 
 	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with wrong username and correct password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("userone@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			//Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
+		})
+	})
+
+	It("should manage user Authentication", func() {
+		By("loging in user with wrong username and wrong password", func() {
+			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
+			Expect(page.Find(loginPage["email"]).Fill("userone@mail.com")).To(Succeed())
+			Expect(page.Find(loginPage["password"]).Fill("passone")).To(Succeed())
+			//Expect(page.Find(loginPage["password"]).Fill("wrongPassword")).To(Succeed())
+			Expect(page.FindByButton(loginPage["submit"]).Submit())
+			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+
+		})
+	})
+
 })
