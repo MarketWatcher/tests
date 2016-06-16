@@ -8,7 +8,7 @@ import (
 )
 
 // Configuration
-var _ = Describe("UserLogout", func() {
+var _ = FDescribe("UserLogout", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {
@@ -18,16 +18,6 @@ var _ = Describe("UserLogout", func() {
 
 	})
 
-	var loginPage = map[string]string{
-		"email":    "#email",
-		"password": "#password",
-		"submit":   "Submit",
-	}
-
-	var logoutPage = map[string]string{
-		"logout": ".fa.fa-sign-out",
-	}
-
 	AfterEach(func() {
 		Expect(page.Destroy()).To(Succeed())
 	})
@@ -36,19 +26,19 @@ var _ = Describe("UserLogout", func() {
 	Describe("When user logged in and user try to logout", func() {
 		BeforeEach(func() {
 			//login
-			Expect(page.Navigate("http://marketwatcher.tech/")).To(Succeed())
-			Expect(page.Find(loginPage["email"]).Fill("user1@mail.com")).To(Succeed())
-			Expect(page.Find(loginPage["password"]).Fill("passOne")).To(Succeed())
-			Expect(page.FindByButton(loginPage["submit"]).Submit()).To(Succeed())
+			Expect(page.Navigate(LoginPage["url"])).To(Succeed())
+			Expect(page.Find(LoginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(LoginPage["password"]).Fill("passOne")).To(Succeed())
+			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
 		})
 
 		It("should user logout succesfully", func() {
-			Expect(page.Find(logoutPage["logout"]).Click()).To(Succeed())
+			Expect(page.Find(LogoutPage["logout"]).Click()).To(Succeed())
 		})
 
 		It("should user can not see logout button after logged out", func() {
-			Expect(page.Find(logoutPage["logout"]).Click()).To(Succeed())
-			Eventually(page.Find(logoutPage["logout"])).ShouldNot(BeFound())
+			Expect(page.Find(LogoutPage["logout"]).Click()).To(Succeed())
+			Eventually(page.Find(LogoutPage["logout"])).ShouldNot(BeFound())
 		})
 	})
 })
