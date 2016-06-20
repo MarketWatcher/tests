@@ -28,18 +28,24 @@ var LogoutPage = map[string]string{
 }
 
 var HomePage = map[string]string{
-	"userName":     "#user-email.b",
+	"userName":     "#user-email > p > b",
 	"createButton": "div.i.fa-plus-square-o",
+	"viewAlarm":    "",
 }
 
 var AlarmPage = map[string]string{
-	"alertname":  "#alert-name-input",
-	"required":   "#required-input",
-	"niceToHave": "#nice-to-have-input",
-	"excluded":   "#excluded-input",
-	"threshold":  "#threshold",
-	"saveButton": "#save-button",
-	"alarmOne":   "alarm1",
+	"alertname":    "#alert-title",
+	"required":     "#must-include",
+	"niceToHave":   "#can-include",
+	"excluded":     "#exclude",
+	"threshold":    "#threshold",
+	"saveButton":   "#save-alert",
+	"cancelButton": "#cancel",
+}
+
+var ViewAlarmPage = map[string]string{
+	"deleteAlarm": "",
+	"popUp":       "",
 }
 
 var _ = BeforeSuite(func() {

@@ -8,7 +8,7 @@ import (
 )
 
 // Configuration
-var _ = FDescribe("UserLogout", func() {
+var _ = Describe("UserLogout", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {

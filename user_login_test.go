@@ -8,7 +8,7 @@ import (
 )
 
 // Configuration
-var _ = Describe("UserLogin", func() {
+var _ = FDescribe("UserLogin", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {
@@ -38,7 +38,7 @@ var _ = Describe("UserLogin", func() {
 			Expect(page.Find(LoginPage["password"]).Fill("passOne")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
 			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
-			Eventually(page.Find(HomePage["userName"])).Should(HaveText("userone@mail.com"))
+			Eventually(page.Find(HomePage["userName"])).Should(HaveText("user1@mail.com"))
 
 		})
 
