@@ -8,7 +8,7 @@ import (
 )
 
 // Configuration
-var _ = FDescribe("HomePage", func() {
+var _ = Describe("HomePage", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {

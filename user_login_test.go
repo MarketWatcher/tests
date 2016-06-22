@@ -50,7 +50,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("user1@mail.com")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("wrongPassword")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 
@@ -62,7 +62,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("userone@mail.com")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("passOne")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 			//Expect(page).To(HaveTitle("div.collapse.navbar-collapse"))
 		})
 	})
@@ -73,7 +73,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("userone@mail.com")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("passone")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 	})
@@ -85,7 +85,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["password"]).Fill("passone")).To(Succeed())
 			//Expect(page.Find(LoginPage["password"]).Fill("wrongPassword")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 	})
@@ -96,7 +96,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("abc")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("passone")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 	})
@@ -107,7 +107,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("user1@mail.com")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 	})
@@ -118,7 +118,7 @@ var _ = FDescribe("UserLogin", func() {
 			Expect(page.Find(LoginPage["email"]).Fill("    ")).To(Succeed())
 			Expect(page.Find(LoginPage["password"]).Fill("passOne")).To(Succeed())
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
-			Eventually(page.Find("div.has-error")).Should(HaveText("Username and password did not match"))
+			Eventually(page.Find(LoginPage["errorMessage"])).Should(HaveText("Username and password did not match"))
 
 		})
 	})
