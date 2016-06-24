@@ -37,16 +37,12 @@ var _ = FDescribe("CreateAlarm", func() {
 			//alarm 1
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
-		})
-
-		It("should user can see alarm message and alarm header", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Your new alarm Alarm 1 is created successfully"))
-			Eventually(page.Find("#message_header")).Should(HaveText("Alarm 1"))
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(HomePage["successMessage"])).Should(HaveText("Alert was created"))
 		})
 
 	})
@@ -64,16 +60,14 @@ var _ = FDescribe("CreateAlarm", func() {
 			//empty alarm
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(AlarmPage["alertnameError"])).Should(HaveText("\"Alert title\" length must be at least 3 characters long"))
 		})
 
-		It("should user can see error message on create alarm page", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Alarm name cannot be null"))
-		})
 	})
 
 	Describe("When user logged in and user try to create another alarm without nice to have and excluded", func() {
@@ -89,15 +83,12 @@ var _ = FDescribe("CreateAlarm", func() {
 			//alarm 2
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 2")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
 			Expect(page.Find(AlarmPage["niceToHave"]).Fill("")).To(Succeed())
 			Expect(page.Find(AlarmPage["excluded"]).Fill("")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
-		})
-		It("should user can see alarm message and alarm header", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Your new alarm Alarm 2 is created successfully"))
-			Eventually(page.Find("#message_header")).Should(HaveText("Alarm 2"))
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(HomePage["successMessage"])).Should(HaveText("Alert was created"))
 		})
 
 	})
@@ -116,14 +107,11 @@ var _ = FDescribe("CreateAlarm", func() {
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill("")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
-		})
-
-		It("should user can see error message on create alarm page", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Must included criteria cannot be null"))
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(AlarmPage["requiredError"])).Should(HaveText("\"Must include\" is not allowed to be empty"))
 		})
 
 	})
@@ -137,20 +125,18 @@ var _ = FDescribe("CreateAlarm", func() {
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
 		})
 
-		It("should user create alarm succesfully", func() {
+		It("should user can not create alarm succesfully with negative threshold", func() {
 			//alarm 3 without threshold
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("0")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(AlarmPage["thresholdError"])).Should(HaveText("\"Threshold\" must be larger than or equal to 1"))
 		})
 
-		It("should user can see error message on create alarm page", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Threshold must be a positivite number"))
-		})
 	})
 
 	Describe("When user logged in and user try to create alarm with negative threshold", func() {
@@ -162,19 +148,16 @@ var _ = FDescribe("CreateAlarm", func() {
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
 		})
 
-		It("should user create alarm succesfully", func() {
+		It("should user can not create alarm succesfully without number", func() {
 			//alarm 3 without threshold
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["threshold"]).Fill("-1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
-		})
-
-		It("should user can see error message on create alarm page", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Threshold must be a positivite number"))
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
+			Expect(page.Find(AlarmPage["threshold"]).Fill("-")).To(Succeed())
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(AlarmPage["thresholdError"])).Should(HaveText("\"Threshold\" must be a number"))
 		})
 	})
 
@@ -187,20 +170,18 @@ var _ = FDescribe("CreateAlarm", func() {
 			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
 		})
 
-		It("should user create alarm succesfully", func() {
+		It("should user can not create alarm succesfully without empty threshold", func() {
 			//alarm 3 without threshold
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			Eventually(page.Find(AlarmPage["thresholdError"])).Should(HaveText("\"Threshold\" must be a number"))
 		})
 
-		It("should user can see error message on create alarm page", func() {
-			Eventually(page.Find("#message")).Should(HaveText("Threshold cannot be null"))
-		})
 	})
 
 })
