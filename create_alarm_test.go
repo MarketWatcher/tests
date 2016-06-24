@@ -184,4 +184,25 @@ var _ = FDescribe("CreateAlarm", func() {
 
 	})
 
+	Describe("When user logged in and user try to create alarm and cancel it", func() {
+		BeforeEach(func() {
+			//login
+			Expect(page.Navigate(LoginPage["url"])).To(Succeed())
+			Expect(page.Find(LoginPage["email"]).Fill("user1@mail.com")).To(Succeed())
+			Expect(page.Find(LoginPage["password"]).Fill("passOne")).To(Succeed())
+			Expect(page.FindByButton(LoginPage["submit"]).Submit()).To(Succeed())
+		})
+
+		It("should user can not create alarm with cancel button", func() {
+			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
+			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
+			Expect(page.Find(AlarmPage["threshold"]).Fill("")).To(Succeed())
+			Expect(page.Find(AlarmPage["cancelButton"]).Click()).To(Succeed())
+			Eventually(page.Find(HomePage["createButton"]))
+		})
+
+	})
 })
