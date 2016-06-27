@@ -16,11 +16,13 @@ func TestMarketwatcherTests(t *testing.T) {
 var agoutiDriver *agouti.WebDriver
 
 var LoginPage = map[string]string{
-	"url":         "http://marketwatcher.tech",
-	"directedUrl": "http://marketwatcher.tech/landing?redirect=%2Fdashboard",
-	"email":       "#email",
-	"password":    "#password",
-	"submit":      "Submit",
+	"url":          "http://marketwatcher.tech",
+	"directedUrl":  "http://marketwatcher.tech/landing?redirect=%2Fdashboard",
+	"email":        "#email",
+	"password":     "#password",
+	"submit":       "Submit",
+	"information":  "#intro-text > :nth-child(2)",
+	"errorMessage": "#error-text ",
 }
 
 var LogoutPage = map[string]string{
@@ -28,24 +30,31 @@ var LogoutPage = map[string]string{
 }
 
 var HomePage = map[string]string{
-	"userName":     "#user-email > p > b",
-	"createButton": "div.i.fa-plus-square-o",
-	"viewAlarm":    "",
+	"userName":       "#user-email > p > b",
+	"createButton":   "#create-alert",
+	"successMessage": ".site-notification-text",
+	"viewAlarmTitle": "",
 }
 
 var AlarmPage = map[string]string{
-	"alertname":    "#alert-title",
-	"required":     "#must-include",
-	"niceToHave":   "#can-include",
-	"excluded":     "#exclude",
-	"threshold":    "#threshold",
-	"saveButton":   "#save-alert",
-	"cancelButton": "#cancel",
+	"alertname":       "#alert-title",
+	"alertnameError":  "#name-error",
+	"required":        "#must-include",
+	"requiredError":   "#requiredCriteria-error",
+	"niceToHave":      "#can-include",
+	"niceToHaveError": "#niceTohaveCriteria-error",
+	"excluded":        "#exclude",
+	"excludedError":   "#excludedCriteria-error",
+	"threshold":       "#threshold",
+	"thresholdError":  "#threshold-error",
+	"saveButton":      "#save-alert",
+	"cancelButton":    "#cancel",
 }
 
 var ViewAlarmPage = map[string]string{
 	"deleteAlarm": "",
 	"popUp":       "",
+	"alarmTitle":  "",
 }
 
 var _ = BeforeSuite(func() {
