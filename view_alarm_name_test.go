@@ -5,11 +5,14 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	. "github.com/sclevine/agouti/matchers"
+
+	"time"
 )
 
 // Configuration
-var _ = Describe("ViewAlarmPage", func() {
+var _ = FDescribe("ViewAlarmPage", func() {
 	var page *agouti.Page
+	//var alarmTitleTimeStamp =
 
 	BeforeEach(func() {
 		var err error
@@ -23,6 +26,9 @@ var _ = Describe("ViewAlarmPage", func() {
 	})
 
 	Describe("When user logged in and user try to create alarm succesfully", func() {
+
+		alarmTitleTimeStamp := time.Now().Format("0102 150405")
+
 		BeforeEach(func() {
 			//login
 			Expect(page.Navigate(LoginPage["url"])).To(Succeed())
@@ -34,17 +40,22 @@ var _ = Describe("ViewAlarmPage", func() {
 		It("should user create alarm succesfully", func() {
 			//alarm 1
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
-			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
-			Expect(page.Find(AlarmPage["required"]).Fill("\"TW\", \"ThoughtWorks\", \"Thought Works\", \"Thoughtworks\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["niceToHave"]).Fill("\"good\", \"best office\"")).To(Succeed())
-			Expect(page.Find(AlarmPage["excluded"]).Fill("\"sucks\", \"not good enough\"")).To(Succeed())
+			Expect(page.Find(AlarmPage["alertname"]).Fill("Test Otomasyon" + alarmTitleTimeStamp)).To(Succeed())
+			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
+			Expect(page.Find(AlarmPage["niceToHave"]).Fill("good, best office")).To(Succeed())
+			Expect(page.Find(AlarmPage["excluded"]).Fill("sucks, not good enough")).To(Succeed())
 			Expect(page.Find(AlarmPage["threshold"]).Fill("1000")).To(Succeed())
-			Expect(page.FindByButton(LoginPage["saveButton"]).Submit()).To(Succeed())
+			Expect(page.Find(AlarmPage["saveButton"]).Click()).To(Succeed())
+			//trendTitles := page.AllByXPath("//h5[text()='Test Otomasyon" + alarmTitleTimeStamp + "']")
+			//Eventually(trendTitles).Should(BeFound())
 		})
 
 		It("should user can see alarm header in alarm detail page", func() {
-			Eventually(page.Find("div.has-error")).Should(HaveText("Alarm 1"))
-		})
+			trendTitles := page.AllByXPath("//h5[text()='Test Otomasyon" + alarmTitleTimeStamp + "']")
+			Eventually(trendTitles).Should(BeFound())
+			Expect(trendTitles.Click()).To(Succeed())
+			Eventually(page.Find(ViewAlarmPage["alarmTitle"])).Should(HaveText("Test Otomasyon" + alarmTitleTimeStamp))
 
+		})
 	})
 })
