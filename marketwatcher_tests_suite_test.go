@@ -24,15 +24,12 @@ var LoginPage = map[string]string{
 	"errorMessage": "#error-text ",
 }
 
-var LogoutPage = map[string]string{
-	"logout": ".fa.fa-sign-out",
-}
-
 var HomePage = map[string]string{
 	"userName":       "#user-email > p > b",
 	"createButton":   "#create-alert",
 	"successMessage": ".site-notification-text",
 	"viewAlarmTitle": "",
+	"logout":         "#logout",
 }
 
 var AlarmPage = map[string]string{

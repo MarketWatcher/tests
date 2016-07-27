@@ -5,10 +5,11 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	. "github.com/sclevine/agouti/matchers"
+	"time"
 )
 
 // Configuration
-var _ = Describe("CreateAlarm", func() {
+var _ = FDescribe("CreateAlarm", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {
@@ -35,6 +36,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user create alarm succesfully", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -58,6 +60,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm successfully without header", func() {
 			//empty alarm
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill("TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -81,6 +84,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user create alarm successfully without nice to have and excluded ", func() {
 			//alarm 2
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 2")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -104,6 +108,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm successfully without required", func() {
 			//alarm 3 without required
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill("")).To(Succeed())
@@ -127,6 +132,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with negative threshold", func() {
 			//alarm 3 without threshold
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -150,6 +156,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully without number", func() {
 			//alarm 3 without threshold
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -172,6 +179,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully without empty threshold", func() {
 			//alarm 3 without threshold
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -194,6 +202,7 @@ var _ = Describe("CreateAlarm", func() {
 		})
 
 		It("should user can not create alarm with cancel button", func() {
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 3")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -217,6 +226,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm with nonalphanumaric alert header", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("%&^*^&*&*8")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -240,6 +250,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm with more than 32 unicode characters alert header", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("fnserkjgfnsekrgjnvkesjrngvkserjngvs")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -262,6 +273,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user create alarm succesfully with turkish characters in header", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("ğüğççççööş")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -284,6 +296,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with more than 140 characterts for required field", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alert 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill("fnserkjgfnsekrgjnvkesjrngvkserjngvsdfjcdnsfkjsndfknsdvndjvbdjfbdjsbfgdjshgbejshbgjfnkksjfnekjsfnejrfnenjfneefjnehrbfejrhgberhjgwdfjebdjeshfbe")).To(Succeed())
@@ -305,6 +318,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with non unicode required", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alert 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill("%$^%^&^*&^*^")).To(Succeed())
@@ -327,6 +341,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with non unicode characterts for niceToHave", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -350,6 +365,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with 140 characterts for niceToHave", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -372,6 +388,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with 140 characterts for excluded", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
@@ -394,6 +411,7 @@ var _ = Describe("CreateAlarm", func() {
 
 		It("should user can not create alarm succesfully with non unicode characterts for excluded", func() {
 			//alarm 1
+			time.Sleep(1000 * time.Millisecond)
 			Expect(page.Find(HomePage["createButton"]).Click()).To(Succeed())
 			Expect(page.Find(AlarmPage["alertname"]).Fill("Alarm 1")).To(Succeed())
 			Expect(page.Find(AlarmPage["required"]).Fill(" TW, ThoughtWorks, Thought Works, Thoughtworks")).To(Succeed())
