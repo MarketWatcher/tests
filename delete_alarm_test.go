@@ -1,4 +1,4 @@
-package marketwatcher_test
+package marketwatcher
 //
 // import (
 // 	. "github.com/onsi/ginkgo"
