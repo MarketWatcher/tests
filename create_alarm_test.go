@@ -9,7 +9,7 @@ import (
 )
 
 // Configuration
-var _ = FDescribe("CreateAlarm", func() {
+var _ = Describe("CreateAlarm", func() {
 	var page *agouti.Page
 
 	BeforeEach(func() {
