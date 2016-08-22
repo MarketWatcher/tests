@@ -1,4 +1,4 @@
-package marketwatcher_api_testing
+package marketwatcher_test
 
 import (
 	"net/http"
