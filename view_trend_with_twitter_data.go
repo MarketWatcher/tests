@@ -53,4 +53,4 @@ var _ = Describe("ViewTrend", func() {
     })
 
   })
-}
+})
