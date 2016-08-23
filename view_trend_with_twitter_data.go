@@ -1,4 +1,4 @@
-package marketwatcher_test
+package marketwatcher
 
 import (
 	. "github.com/onsi/ginkgo"
@@ -53,4 +53,4 @@ var _ = Describe("ViewTrend", func() {
     })
 
   })
-}
+})
